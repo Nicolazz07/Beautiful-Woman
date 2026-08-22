@@ -1,0 +1,64 @@
+/* --- Variables y Reset --- */
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #e67e22; /* Tono coral/naranja */
+    --bg-light: #f9f9f9;
+    --text-dark: #333;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Poppins', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font-body); background-color: var(--bg-light); color: var(--text-dark); }
+
+/* --- Navegación --- */
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 5%; background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky; top: 0; z-index: 100;
+}
+.navbar .logo h1 { font-family: var(--font-heading); color: var(--primary-color); font-size: 1.8rem; }
+.nav-links a { margin: 0 1rem; text-decoration: none; color: var(--text-dark); font-weight: 600; text-transform: uppercase; font-size: 0.9rem; }
+.nav-icons i { margin-left: 1.2rem; font-size: 1.2rem; cursor: pointer; color: var(--primary-color); }
+
+/* --- Banner Hero --- */
+.hero {
+    height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200') center/cover;
+    display: flex; justify-content: center; align-items: center; text-align: center; color: #fff;
+}
+.hero-content h2 { font-family: var(--font-heading); font-size: 3.5rem; margin-bottom: 1rem; }
+.hero-content p { font-size: 1.2rem; margin-bottom: 2rem; }
+.btn-primary {
+    background-color: var(--accent-color); color: #fff; border: none; padding: 1rem 2rem;
+    font-size: 1rem; font-family: var(--font-body); cursor: pointer; border-radius: 4px; transition: 0.3s;
+}
+.btn-primary:hover { background-color: #d35400; }
+
+/* --- Catálogo (Grilla) --- */
+.catalogo-section { padding: 4rem 5%; text-align: center; }
+.section-title { font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 3rem; color: var(--primary-color); }
+
+.grid-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem; max-width: 1200px; margin: 0 auto;
+}
+
+/* --- Tarjeta de Producto --- */
+.card-producto {
+    background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s; text-align: left;
+}
+.card-producto:hover { transform: translateY(-5px); }
+.card-img-container { height: 350px; overflow: hidden; }
+.card-img-container img { width: 100%; height: 100%; object-fit: cover; }
+.card-body { padding: 1.5rem; }
+.tag-categoria { font-size: 0.8rem; text-transform: uppercase; color: var(--accent-color); font-weight: 600; letter-spacing: 1px; }
+.card-titulo { font-family: var(--font-heading); font-size: 1.3rem; margin: 0.5rem 0; color: var(--primary-color); }
+.card-precio { font-size: 1.2rem; font-weight: 600; color: #27ae60; margin-bottom: 1rem; }
+.btn-agregar {
+    width: 100%; background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color);
+    padding: 0.8rem; font-family: var(--font-body); font-weight: 600; cursor: pointer; transition: 0.3s;
+}
+.btn-agregar:hover { background: var(--primary-color); color: #fff; }
