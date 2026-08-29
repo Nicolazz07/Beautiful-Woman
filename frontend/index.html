@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beautiful Woman | Tienda de Moda</title>
+    <title>Beautiful Woman | Moda y Elegancia</title>
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Iconos y tipografía -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
@@ -20,33 +19,44 @@
             <a href="#">Inicio</a>
             <a href="#catalogo">Catálogo</a>
             <a href="#">Reseñas</a>
+            <a href="#">Nosotros</a>
         </nav>
-        <div class="nav-icons">
-            <i class="fas fa-search"></i>
-            <i class="fas fa-heart"></i>
-            <i class="fas fa-shopping-bag"></i>
+        <div class="nav-actions">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar productos...">
+            </div>
+            <i class="far fa-heart"></i>
+            <i class="fas fa-shopping-cart"></i>
+            <button class="btn-cuenta">Mi cuenta</button>
         </div>
     </header>
 
     <!-- Banner Principal -->
     <section class="hero">
-        <div class="hero-content">
-            <h2>Moda hecha con propósito</h2>
-            <p>Descubre la nueva colección con estilos únicos para ti.</p>
-            <button class="btn-primary">Ver Colección</button>
+        <div class="hero-text">
+            <span class="tag-coleccion">NUEVA COLECCIÓN 2026</span>
+            <h2>Moda y Elegancia Femenina</h2>
+            <p>Descubre prendas pensadas para resaltar tu belleza natural, con diseños exclusivos hechos en Colombia.</p>
+            <button class="btn-dark">Explorar Colección &rarr;</button>
+        </div>
+        <div class="hero-image">
+            <!-- Imagen simulada del mockup -->
+            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600" alt="Modelo con blusa">
         </div>
     </section>
 
     <!-- Sección de Catálogo -->
     <main id="catalogo" class="catalogo-section">
-        <h2 class="section-title">Novedades</h2>
-        <!-- Aquí se inyectarán las tarjetas de productos desde JavaScript -->
+        <div class="catalogo-header">
+            <h2>Destacados y Novedades</h2>
+            <p>Los artículos más recientes y más vendidos de la temporada</p>
+        </div>
         <div id="grid-productos" class="grid-productos">
-            <p id="loading">Cargando catálogo de prendas...</p>
+            <!-- JS inyectará las tarjetas aquí -->
         </div>
     </main>
 
-    <!-- Conectar la lógica de JS -->
     <script src="js/app.js"></script>
 </body>
 </html>
