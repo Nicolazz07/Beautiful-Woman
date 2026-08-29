@@ -132,3 +132,26 @@ body { font-family: var(--font-main); color: var(--text-dark); background-color:
     flex-grow: 1; /* Toma todo el espacio disponible sobrante */
     padding-top: 1rem;
 }
+/* --- Icono y Contador del Carrito --- */
+.cart-container {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -10px;
+    right: -12px;
+    background-color: var(--text-dark); /* Color oscuro de la marca */
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 18px;
+}
