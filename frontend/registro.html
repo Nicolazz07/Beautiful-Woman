@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Woman | Crear Cuenta</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-body">
+    <div class="split-layout">
+        
+        <!-- Mitad Izquierda (Fondo Rosa) -->
+        <div class="split-left">
+            <h2 class="login-logo">Beautiful Woman</h2>
+            <div class="quote-container">
+                <h3>“Tu estilo, <br>tu esencia.”</h3>
+                <p>Únete a nuestra comunidad y descubre colecciones exclusivas pensadas para ti.</p>
+            </div>
+            <p class="copyright">© 2026 Beautiful Woman</p>
+        </div>
+
+        <!-- Mitad Derecha (Formulario de Registro) -->
+        <div class="split-right">
+            <div class="form-container">
+                <h2>Crear Cuenta</h2>
+                <p>Ingresa tus datos para registrarte</p>
+                
+                <form id="form-registro">
+                    <div class="input-group">
+                        <label>Nombre completo</label>
+                        <input type="text" placeholder="Ej. Camila López" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Correo electrónico</label>
+                        <input type="email" placeholder="tunombre@email.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Contraseña</label>
+                        <input type="password" placeholder="Mínimo 8 caracteres" required minlength="8">
+                    </div>
+                    <div class="input-group">
+                        <label>Confirmar Contraseña</label>
+                        <input type="password" placeholder="Repite tu contraseña" required minlength="8">
+                    </div>
+                    
+                    <button type="submit" class="btn-dark btn-full" style="margin-top: 1rem;">Registrarme</button>
+                </form>
+                
+                <div class="divider"><span>o regístrate con</span></div>
+                
+                <div class="social-login">
+                    <button class="btn-outline">Google</button>
+                    <button class="btn-outline">Facebook</button>
+                </div>
+                
+                <p class="switch-form">¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+            </div>
+        </div>
+        
+    </div>
+    <script src="js/app.js"></script>
+    <script>
+    const formRegistro = document.getElementById('form-registro');
+
+    formRegistro.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Evitamos que la página se recargue al darle al botón
+
+        // Capturamos lo que el usuario escribió
+        const nombre = formRegistro.querySelectorAll('input')[0].value;
+        const correo = formRegistro.querySelectorAll('input')[1].value;
+        const contrasena = formRegistro.querySelectorAll('input')[2].value;
+        const confirmarContrasena = formRegistro.querySelectorAll('input')[3].value;
+
+        // Validamos que las contraseñas sean iguales
+        if (contrasena !== confirmarContrasena) {
+            alert('Las contraseñas no coinciden. Por favor, verifica.');
+            return;
+        }
+
+        // Enviamos los datos al servidor Node.js
+        try {
+            const respuesta = await fetch('http://localhost:3000/api/registro', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nombre, correo, contrasena })
+            });
+
+            if (respuesta.ok) {
+                // Le avisamos que salió bien
+                alert('¡Registro exitoso! Por favor inicia sesión.');
+                
+                // LA LÍNEA MÁGICA: Redirecciona al login
+                window.location.href = 'login.html'; 
+            } else {
+                alert(datos.error);
+            }
+        } catch (error) {
+            console.error('Error de conexión:', error);
+            alert('No se pudo conectar con el servidor.');
+        }
+    });
+</script>
+</body>
+</html>

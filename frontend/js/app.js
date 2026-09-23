@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 async function cargarCatalogo() {
     const gridProductos = document.getElementById('grid-productos');
     
+    if (!gridProductos) return;
+    
     try {
         // Hacemos la petición (Fetch) a nuestra ruta de backend
         const respuesta = await fetch('http://localhost:3000/api/productos');
@@ -17,6 +19,7 @@ async function cargarCatalogo() {
         }
 
         const productos = await respuesta.json(); // Transformar respuesta a JSON
+
         
         // Limpiar el texto de "Cargando..."
         gridProductos.innerHTML = '';
