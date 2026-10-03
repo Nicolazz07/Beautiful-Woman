@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolsa de Compras | Beautiful Woman</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Arial, sans-serif; }
+        body { background-color: #fcfaf8; color: #1a1a1a; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        /* Navbar con el globo del carrito actualizado */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #ffffff; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
+        .header-logo { font-size: 20px; font-weight: bold; text-decoration: none; color: #1a1a1a; }
+        .header-nav { display: flex; gap: 30px; font-size: 14px; }
+        .header-nav a { text-decoration: none; color: #666; transition: color 0.3s; }
+        .header-nav a:hover { color: #d89b93; }
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .header-actions a { color: #666; text-decoration: none; font-size: 18px; transition: color 0.3s; }
+        .btn-cuenta { background-color: #2b2927; color: white !important; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-size: 14px; font-weight: bold; }
+        
+        /* Burbuja del carrito */
+        .cart-wrapper { position: relative; display: inline-flex; align-items: center; }
+        .badge-carrito { position: absolute; top: -8px; right: -10px; background-color: #d89b93; color: #2b2927; font-size: 10px; font-weight: bold; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+
+        /* Contenedor del Carrito */
+        .carrito-container { display: flex; gap: 40px; max-width: 1200px; margin: 40px auto; padding: 0 50px; width: 100%; flex: 1; align-items: flex-start; }
+        
+        /* Lado Izquierdo: Lista de productos */
+        .lista-productos { flex: 2; }
+        .lista-productos h1 { font-size: 28px; margin-bottom: 25px; color: #2b2927; }
+        
+        .item-carrito { display: flex; align-items: center; gap: 20px; background: white; padding: 20px; border-radius: 15px; border: 1px solid #f0e6eb; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .item-img { width: 100px; height: 120px; object-fit: cover; border-radius: 10px; background-color: #f5f5f5; }
+        .item-detalles { flex: 1; }
+        .item-detalles h3 { font-size: 16px; margin-bottom: 5px; color: #333; }
+        .item-detalles .precio-unitario { font-size: 14px; color: #888; margin-bottom: 10px; display: block; }
+        
+        /* Lado Derecho: Resumen */
+        .resumen-compra { flex: 1; background: white; padding: 30px; border-radius: 20px; border: 1px solid #f0e6eb; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .resumen-compra h2 { font-size: 20px; margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .fila-resumen { display: flex; justify-content: space-between; font-size: 15px; color: #555; margin-bottom: 15px; }
+        .fila-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; color: #2b2927; margin-top: 20px; padding-top: 20px; border-top: 2px dashed #eee; }
+        
+        .btn-pagar { width: 100%; padding: 15px; background-color: #322d2c; color: white; border: none; border-radius: 30px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 25px; transition: background 0.3s; }
+        .btn-pagar:hover { background-color: #d89b93; color: #2b2927; }
+
+        .btn-vaciar { background: none; border: none; color: #ff4d4d; font-size: 13px; cursor: pointer; text-decoration: underline; margin-top: 20px; display: block; width: 100%; text-align: center; }
+
+        /* Mensaje de carrito vacío */
+        .carrito-vacio { text-align: center; padding: 50px 0; }
+        .carrito-vacio i { font-size: 50px; color: #ddd; margin-bottom: 20px; }
+        .btn-volver { display: inline-block; margin-top: 20px; padding: 10px 25px; background: #eac9c7; color: #2b2927; text-decoration: none; border-radius: 20px; font-weight: bold; }
+
+        @media (max-width: 850px) {
+            .carrito-container { flex-direction: column; padding: 20px; }
+            .resumen-compra { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="header-logo">Beautiful Woman</a>
+        <nav class="header-nav">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="resenas.html">Reseñas</a>
+            <a href="nosotros.html">Nosotros</a>
+        </nav>
+        <div class="header-actions">
+            <a href="carrito.html" class="cart-wrapper" style="color: #d89b93;">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="contador-carrito" class="badge-carrito">0</span>
+            </a>
+            <a href="login.html" class="btn-cuenta">Mi cuenta</a>
+        </div>
+    </header>
+
+    <main class="carrito-container">
+        <!-- Lista de productos añadidos -->
+        <section class="lista-productos">
+            <h1>Tu Bolsa de Compras</h1>
+            <div id="contenedor-items">
+                <!-- Aquí JavaScript dibujará los productos -->
+            </div>
+        </section>
+
+        <!-- Cuadro de pagos -->
+        <aside class="resumen-compra">
+            <h2>Resumen del Pedido</h2>
+            <div class="fila-resumen">
+                <span>Subtotal</span>
+                <span id="subtotal-txt">$0</span>
+            </div>
+            <div class="fila-resumen">
+                <span>Envío</span>
+                <span>Gratis</span>
+            </div>
+            <div class="fila-total">
+                <span>Total a Pagar</span>
+                <span id="total-txt">$0</span>
+            </div>
+            <button class="btn-pagar" onclick="alert('¡Módulo de pagos en construcción! Gracias por probar el sistema.')">Finalizar Compra</button>
+            
+            <button class="btn-vaciar" id="btn-vaciar-carrito">Vaciar carrito</button>
+        </aside>
+    </main>
+
+    <!-- Conectamos tu app.js para que el globo de arriba funcione -->
+    <script src="js/app.js"></script>
+
+    <!-- Script específico para pintar esta página -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const contenedorItems = document.getElementById('contenedor-items');
+            const subtotalTxt = document.getElementById('subtotal-txt');
+            const totalTxt = document.getElementById('total-txt');
+            const btnVaciar = document.getElementById('btn-vaciar-carrito');
+
+            // 1. Leemos el carrito de tu LocalStorage (el que crea app.js)
+            let carrito = JSON.parse(localStorage.getItem('carritoBW')) || [];
+
+            // 2. Función para dibujar todo
+            function renderizarCarrito() {
+                contenedorItems.innerHTML = '';
+                let total = 0;
+
+                if (carrito.length === 0) {
+                    contenedorItems.innerHTML = `
+                        <div class="carrito-vacio">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            <h2>Tu bolsa está vacía</h2>
+                            <p style="color: #666; margin-top: 10px;">¡Es un buen momento para explorar nuestras prendas!</p>
+                            <a href="catalogo.html" class="btn-volver">Ir al Catálogo</a>
+                        </div>
+                    `;
+                    subtotalTxt.textContent = '$0';
+                    totalTxt.textContent = '$0';
+                    btnVaciar.style.display = 'none';
+                    return;
+                    
+                }
+
+                btnVaciar.style.display = 'block';
+
+                // Recorremos cada prenda guardada
+                carrito.forEach((producto, index) => {
+                    const subtotalItem = producto.precio * producto.cantidad;
+                    total += subtotalItem;
+
+                    const formatoPrecio = '$' + parseInt(producto.precio).toLocaleString('es-CO');
+                    const formatoSubtotal = '$' + parseInt(subtotalItem).toLocaleString('es-CO');
+
+                    const itemHTML = `
+                        <div class="item-carrito">
+                            <img src="${producto.imagen}" alt="${producto.nombre}" class="item-img" onerror="this.onerror=null; this.src='https://placehold.co/300x400/eac9c7/2b2927.png?text=Sin+Foto'">
+                            <div class="item-detalles">
+                                <h3>${producto.nombre}</h3>
+                                <span class="precio-unitario">Precio: ${formatoPrecio}</span>
+                                <div>
+                                    <strong>Cantidad:</strong> ${producto.cantidad}
+                                </div>
+                            </div>
+                            <div style="font-weight: bold; font-size: 16px; color: #2b2927; display: flex; flex-direction: column; align-items: flex-end; gap: 15px;">
+                                ${formatoSubtotal}
+                                <button onclick="eliminarPrenda(${index})" style="background: none; border: none; color: #ff4d4d; cursor: pointer; font-size: 18px;" title="Quitar prenda">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    contenedorItems.innerHTML += itemHTML;
+                });
+
+                // Actualizamos los textos de la derecha
+                const formatoTotalFinal = '$' + parseInt(total).toLocaleString('es-CO');
+                subtotalTxt.textContent = formatoTotalFinal;
+                totalTxt.textContent = formatoTotalFinal;
+
+                // Función global para eliminar una prenda específica
+            window.eliminarPrenda = function(index) {
+                // 1. Sacamos un elemento del arreglo usando su posición
+                carrito.splice(index, 1);
+                
+                // 2. Guardamos el arreglo actualizado en el LocalStorage
+                localStorage.setItem('carritoBW', JSON.stringify(carrito));
+                
+                // 3. Volvemos a dibujar la pantalla para que la prenda desaparezca y el total cambie
+                renderizarCarrito();
+                
+                // 4. Actualizamos el número del globito rojo en la barra de navegación
+                actualizarContadorCarrito();
+            };
+            }
+
+            // 3. Botón para borrar todo
+            btnVaciar.addEventListener('click', () => {
+                if (confirm('¿Estás segura de vaciar tu bolsa de compras?')) {
+                    localStorage.removeItem('carritoBW');
+                    carrito = []; // Vaciamos el arreglo
+                    renderizarCarrito();
+                    actualizarContadorCarrito(); // Esta función viene de tu app.js
+                }
+            });
+
+            // 4. Ejecutamos la función al cargar la página
+            renderizarCarrito();
+        });
+    </script>
+<script src="js/app.js"></script>
+</body>
+</html>

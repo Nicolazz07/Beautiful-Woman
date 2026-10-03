@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo | Beautiful Woman</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Arial, sans-serif; }
+        body { background-color: #fcfaf8; color: #1a1a1a; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        /* Navbar (Exactamente igual) */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: #ffffff; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
+        .header-logo { font-size: 20px; font-weight: bold; text-decoration: none; color: #1a1a1a; }
+        .header-nav { display: flex; gap: 30px; font-size: 14px; }
+        .header-nav a { text-decoration: none; color: #666; transition: color 0.3s; }
+        .header-nav a:hover { color: #d89b93; }
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .header-actions a { color: #666; text-decoration: none; font-size: 18px; }
+        .btn-cuenta { background-color: #2b2927; color: white !important; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-size: 14px; font-weight: bold; }
+
+        /* Contenedor del Catálogo (Grid de Filtros + Productos) */
+        .catalogo-container { display: flex; gap: 40px; padding: 40px 50px; max-width: 1400px; margin: 0 auto; width: 100%; }
+
+        /* Barra lateral de Filtros */
+        .filtros { width: 250px; flex-shrink: 0; background: white; padding: 25px; border-radius: 20px; border: 1px solid #f0f0f0; height: fit-content; }
+        .filtros h3 { font-size: 16px; margin-bottom: 15px; color: #2b2927; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        .grupo-filtro { margin-bottom: 25px; }
+        .grupo-filtro label { display: block; margin-bottom: 10px; font-size: 14px; color: #555; cursor: pointer; }
+        .grupo-filtro input[type="checkbox"] { margin-right: 8px; accent-color: #2b2927; }
+        .rango-precio { width: 100%; accent-color: #d89b93; }
+
+        /* Cuadrícula de Productos */
+        .productos { flex: 1; }
+        .header-productos { display: flex; justify-content: space-between; margin-bottom: 25px; align-items: center; }
+        .header-productos h1 { font-size: 24px; }
+        
+        .grid-productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; }
+        .producto-card { background: white; border-radius: 15px; padding: 15px; text-align: center; border: 1px solid #f0f0f0; transition: box-shadow 0.3s; position: relative; }
+        .producto-card:hover { box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .producto-img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
+        
+        .btn-favorito { position: absolute; top: 25px; right: 25px; background: white; border: none; border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: color 0.3s; }
+        .btn-favorito:hover { color: #ff4d4d; }
+
+        .producto-info h4 { font-size: 15px; color: #333; margin-bottom: 5px; font-weight: normal; }
+        .producto-info .precio { font-size: 16px; font-weight: bold; color: #1a1a1a; margin-bottom: 15px; display: block; }
+        
+        .btn-add-carrito { width: 100%; padding: 10px; background-color: #f3e9df; color: #2b2927; border: none; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .btn-add-carrito:hover { background-color: #eac9c7; }
+
+        @media (max-width: 900px) {
+            .catalogo-container { flex-direction: column; padding: 20px; }
+            .filtros { width: 100%; }
+        }
+        /* Estilos para el contador del carrito */
+.cart-wrapper {
+    position: relative; /* Clave para que la burbuja se posicione respecto al ícono */
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-carrito {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #d89b93; /* El rosa de tu marca */
+    color: #2b2927; /* Texto oscuro para que resalte */
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="header-logo">Beautiful Woman</a>
+        <nav class="header-nav">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html" style="color: #d89b93; font-weight: bold;">Catálogo</a>
+            <a href="reseñas.html">Reseñas</a>
+            <a href="nosotros.html">Nosotros</a>
+        </nav>
+        <div class="header-actions">
+            <a href="carrito.html" class="cart-wrapper">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span id="contador-carrito" class="badge-carrito">0</span>
+</a>
+            <a href="login.html" class="btn-cuenta">Mi cuenta</a>
+        </div>
+    </header>
+
+    <main class="catalogo-container">
+        <!-- Panel de Filtros -->
+        <aside class="filtros">
+            <h3>Categoría</h3>
+            <div class="grupo-filtro">
+                <label><input type="checkbox"> Blusas</label>
+                <label><input type="checkbox"> Vestidos</label>
+                <label><input type="checkbox"> Pantalones</label>
+                <label><input type="checkbox"> Faldas</label>
+            </div>
+
+            <h3>Talla</h3>
+            <div class="grupo-filtro">
+                <label><input type="checkbox"> XS</label>
+                <label><input type="checkbox"> S</label>
+                <label><input type="checkbox"> M</label>
+                <label><input type="checkbox"> L</label>
+            </div>
+
+            
+        </aside>
+
+        <!-- Cuadrícula de Ropa -->
+        <section class="productos">
+            <div class="header-productos">
+                <h1>Toda la ropa</h1>
+                <span style="font-size: 14px; color: #666;">Mostrando 3 resultados</span>
+            </div>
+
+            <div class="grid-productos" id="contenedor-productos">
+    <!-- Aquí JavaScript inyectará la ropa desde MySQL automáticamente -->
+    <p style="text-align: center; color: #888; grid-column: 1 / -1;">Cargando colección...</p>
+            </div>
+        </section>
+    </main>
+<!-- Script para cargar el catálogo dinámico desde Node.js -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const contenedor = document.getElementById('contenedor-productos');
+
+            try {
+                // 1. Pedimos los productos a la ruta de tu server.js
+                const respuesta = await fetch('http://localhost:3000/api/productos');
+                const productos = await respuesta.json();
+
+                // 2. Limpiamos el texto de "Cargando colección..."
+                contenedor.innerHTML = '';
+
+                // 3. Verificamos si hay productos en la base de datos
+                if (productos.length === 0) {
+                    contenedor.innerHTML = '<p style="text-align: center; color: #888; grid-column: 1 / -1;">No hay productos disponibles en este momento.</p>';
+                    return;
+                }
+
+                // 4. Por cada producto que llegue de MySQL, dibujamos una tarjeta
+                productos.forEach(producto => {
+                    // Formateamos el precio para que se vea como moneda colombiana (Ej: $189.900)
+                    const precioFormateado = '$' + parseInt(producto.precio_base).toLocaleString('es-CO');
+
+                    // Construimos la tarjeta HTML usando los datos de la base de datos
+                    const tarjetaHTML = `
+                        <div class="producto-card">
+                            <button class="btn-favorito"><i class="fa-solid fa-heart"></i></button>
+                            <img src="${producto.imagen_principal}" alt="${producto.nombre}" class="producto-img" onerror="this.onerror=null; this.src='https://placehold.co/300x400/eac9c7/2b2927.png?text=Sin+Foto'">
+                            <div class="producto-info">
+                                <h4>${producto.nombre}</h4>
+                                <span class="precio">${precioFormateado}</span>
+                                <button class="btn-add-carrito" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio_base}, '${producto.imagen_principal}')">Añadir al carrito</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Metemos la tarjeta en la pantalla
+                    contenedor.innerHTML += tarjetaHTML;
+                });
+
+            } catch (error) {
+                console.error('Error cargando el catálogo:', error);
+                contenedor.innerHTML = '<p style="text-align: center; color: #ff4d4d; grid-column: 1 / -1;">Error al cargar el catálogo. Verifica que XAMPP y Node.js estén encendidos.</p>';
+            }
+        });
+    </script>
+    <script src="js/app.js"></script>
+</body>
+</html>

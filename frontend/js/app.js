@@ -105,3 +105,29 @@ function actualizarContadorCarrito() {
         contador.innerText = totalPrendas;
     }
 }
+
+// --- Lógica de la Memoria de Sesión (Usuario) ---
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Buscamos si hay datos guardados en la memoria del navegador
+    const usuarioGuardado = localStorage.getItem('usuarioBW');
+
+    // 2. Si existe un usuario guardado, actualizamos la barra de navegación
+    if (usuarioGuardado) {
+        const usuario = JSON.parse(usuarioGuardado);
+        
+        // Extraemos solo el primer nombre (ej: de "Laura Martínez" saca "Laura")
+        const primerNombre = usuario.nombre.split(' ')[0];
+        
+        // Seleccionamos el botón de la navbar
+        const btnCuenta = document.querySelector('.btn-cuenta');
+        
+        if (btnCuenta) {
+            btnCuenta.textContent = `Hola, ${primerNombre}`;
+            btnCuenta.href = '#'; // Más adelante podemos hacer que lleve a un panel de perfil
+            
+            // Opcional: Le cambiamos un poco el estilo para que resalte
+            btnCuenta.style.backgroundColor = '#d89b93';
+            btnCuenta.style.color = '#2b2927';
+        }
+    }
+});

@@ -211,3 +211,27 @@ body { font-family: var(--font-main); color: var(--text-dark); background-color:
 }
 .switch-form { text-align: center; font-size: 0.9rem; }
 .switch-form a { color: #A67B71; font-weight: 700; text-decoration: none; }
+
+/* Estilos para el contador del carrito */
+.cart-wrapper {
+    position: relative; /* Clave para que la burbuja se posicione respecto al ícono */
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-carrito {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #d89b93; /* El rosa de tu marca */
+    color: #2b2927; /* Texto oscuro para que resalte */
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

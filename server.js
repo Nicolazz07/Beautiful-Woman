@@ -38,14 +38,12 @@ app.post('/api/registro', (req, res) => {
     
     db.query(sql, [nombre, correo, contrasena], (err, result) => {
         if (err) {
-            // Imprimimos el error en consola, pero NO usamos "throw err"
+            // Imprimimos el error, pero NO dejamos que el servidor muera
             console.error('Error de MySQL:', err.sqlMessage);
-            
-            // Le respondemos al navegador sin apagar el servidor (MUY IMPORTANTE EL 'return')
+            // ESTE 'return' ES VITAL PARA EVITAR EL CRASH:
             return res.status(400).json({ error: 'Este correo ya está registrado.' });
         }
         
-        // Si no hay error, enviamos el éxito
         res.status(200).json({ mensaje: '¡Registro exitoso!' });
     });
 });
@@ -84,6 +82,35 @@ app.post('/api/login', (req, res) => {
             res.status(401).json({ error: 'Correo o contraseña incorrectos' });
         }
     });
+});
+// --- RUTAS PARA LAS RESEÑAS (VERSIÓN ASYNC/AWAIT) ---
+
+// Ruta para guardar una reseña nueva
+app.post('/api/resenas', async (req, res) => {
+    const { nombre, calificacion, comentario } = req.body;
+    const sql = 'INSERT INTO resenas (nombre, calificacion, comentario) VALUES (?, ?, ?)';
+    
+    try {
+        await db.query(sql, [nombre, calificacion, comentario]);
+        res.status(200).json({ mensaje: '¡Reseña publicada con éxito!' });
+    } catch (error) {
+        console.error('Error al guardar reseña:', error);
+        res.status(500).json({ error: 'Error al guardar la reseña en la base de datos' });
+    }
+});
+
+// Ruta para pedir todas las reseñas y mostrarlas
+app.get('/api/resenas', async (req, res) => {
+    const sql = 'SELECT * FROM resenas ORDER BY id_resena DESC';
+    
+    try {
+        // Usamos la misma estructura que ya te funciona en el catálogo
+        const [resultados] = await db.query(sql);
+        res.json(resultados);
+    } catch (error) {
+        console.error('Error al consultar reseñas:', error);
+        res.status(500).json({ error: 'Error al obtener las reseñas' });
+    }
 });
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
