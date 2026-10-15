@@ -81,6 +81,20 @@
             <a href="catalogo.html">Catálogo</a>
             <a href="reseñas.html">Reseñas</a>
             <a href="nosotros.html">Nosotros</a>
+            <a href="#" onclick="accesoAdmin()" style="color: #5c2c35; font-weight: bold;">
+                <i class="fa-solid fa-lock"></i> Admin
+            </a>
+
+            <script>
+            function accesoAdmin() {
+                const clave = prompt("Área restringida de Beautiful Woman.\nIngresa la contraseña de Administrador:");
+                if (clave === "admin123") {
+                    window.location.href = "admin.html";
+                } else if (clave !== null) {
+                    alert("Contraseña incorrecta. Acceso denegado.");
+                }
+            }
+</script>
         </nav>
         <div class="header-actions">
             <a href="carrito.html" class="cart-wrapper">

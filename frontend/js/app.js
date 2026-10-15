@@ -70,6 +70,12 @@ let carrito = JSON.parse(localStorage.getItem('carritoBW')) || [];
 
 // Función para atrapar el producto al hacer clic
 function agregarAlCarrito(idProducto, nombre, precio, imagen) {
+
+    // --- NUEVAS 3 LÍNEAS PARA CAPTURAR LA TALLA ---
+    const selectorTalla = document.getElementById(`talla-${arguments[0]}`);
+    const tallaElegida = selectorTalla ? selectorTalla.value : 'M';
+    nombre = `${nombre} - Talla ${tallaElegida}`;
+    // ----------------------------------------------
     // Revisar si la prenda ya está en la bolsa
     const prendaExistente = carrito.find(item => item.id === idProducto);
     

@@ -87,6 +87,7 @@
             <a href="catalogo.html" style="color: #d89b93; font-weight: bold;">Catálogo</a>
             <a href="reseñas.html">Reseñas</a>
             <a href="nosotros.html">Nosotros</a>
+            
         </nav>
         <div class="header-actions">
             <a href="carrito.html" class="cart-wrapper">
@@ -100,22 +101,7 @@
     <main class="catalogo-container">
         <!-- Panel de Filtros -->
         <aside class="filtros">
-            <h3>Categoría</h3>
-            <div class="grupo-filtro">
-                <label><input type="checkbox"> Blusas</label>
-                <label><input type="checkbox"> Vestidos</label>
-                <label><input type="checkbox"> Pantalones</label>
-                <label><input type="checkbox"> Faldas</label>
-            </div>
-
-            <h3>Talla</h3>
-            <div class="grupo-filtro">
-                <label><input type="checkbox"> XS</label>
-                <label><input type="checkbox"> S</label>
-                <label><input type="checkbox"> M</label>
-                <label><input type="checkbox"> L</label>
-            </div>
-
+            <h1>Catalogo</h1>
             
         </aside>
 
@@ -164,11 +150,21 @@
                             <div class="producto-info">
                                 <h4>${producto.nombre}</h4>
                                 <span class="precio">${precioFormateado}</span>
+                                
+                                <div style="margin: 8px 0; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                    <label for="talla-${producto.id_producto}" style="font-size: 13px; color: #555; font-weight: 500;">Talla:</label>
+                                    <select id="talla-${producto.id_producto}" style="padding: 4px 10px; border-radius: 8px; border: 1px solid #eac9c7; background-color: #fff; color: #2b2927; font-weight: bold; cursor: pointer;">
+                                        <option value="XS">XS</option>
+                                        <option value="S">S</option>
+                                        <option value="M" selected>M</option>
+                                        <option value="L">L</option>
+                                    </select>
+                                </div>
+
                                 <button class="btn-add-carrito" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio_base}, '${producto.imagen_principal}')">Añadir al carrito</button>
                             </div>
                         </div>
                     `;
-                    
                     // Metemos la tarjeta en la pantalla
                     contenedor.innerHTML += tarjetaHTML;
                 });

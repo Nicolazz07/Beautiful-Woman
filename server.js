@@ -112,7 +112,53 @@ app.get('/api/resenas', async (req, res) => {
         res.status(500).json({ error: 'Error al obtener las reseñas' });
     }
 });
+// 1. AGREGAR UN PRODUCTO NUEVO (POST)
+app.post('/api/productos', async (req, res) => {
+    try {
+        const { nombre, descripcion_corta, precio_base, imagen_principal, id_categoria, activo } = req.body;
+        const sql = `
+            INSERT INTO productos (nombre, descripcion_corta, precio_base, imagen_principal, id_categoria, activo) 
+            VALUES (?, ?, ?, ?, ?, ?)
+        `;
+        const [result] = await db.query(sql, [nombre, descripcion_corta, precio_base, imagen_principal, id_categoria || 1, activo ?? 1]);
+        res.json({ mensaje: 'Producto agregado con éxito', id_producto: result.insertId });
+    } catch (error) {
+        console.error('Error al insertar producto:', error);
+        res.status(500).json({ error: error.sqlMessage || error.message });
+    }
+});
+
+// 2. MODIFICAR UN PRODUCTO EXISTENTE (PUT)
+app.put('/api/productos/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nombre, descripcion_corta, precio_base, imagen_principal, id_categoria, activo } = req.body;
+        const sql = `
+            UPDATE productos 
+            SET nombre = ?, descripcion_corta = ?, precio_base = ?, imagen_principal = ?, id_categoria = ?, activo = ?
+            WHERE id_producto = ?
+        `;
+        await db.query(sql, [nombre, descripcion_corta, precio_base, imagen_principal, id_categoria || 1, activo ?? 1, id]);
+        res.json({ mensaje: 'Producto actualizado correctamente' });
+    } catch (error) {
+        console.error('Error al actualizar producto:', error);
+        res.status(500).json({ error: error.sqlMessage || error.message });
+    }
+});
+
+// 3. ELIMINAR UN PRODUCTO (DELETE)
+app.delete('/api/productos/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await db.query('DELETE FROM productos WHERE id_producto = ?', [id]);
+        res.json({ mensaje: 'Producto eliminado correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar producto:', error);
+        res.status(500).json({ error: error.sqlMessage || error.message });
+    }
+});
+// Encender el servidor de Node.js en el puerto 3000
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`🚀 Servidor de Node.js corriendo en http://localhost:${PORT}`);
 });
